@@ -1,0 +1,32 @@
+{
+    "bounds": {
+        "maxx": [
+            -69.06461890186635
+        ],
+        "maxy": [
+            44.5188750075358
+        ],
+        "minx": [
+            -80.41417236584573
+        ],
+        "miny": [
+            40.258338053379745
+        ]
+    },
+    "data_fs": {
+        "xs": [],
+        "ys": []
+    },
+    "data_snr": {
+        "x": [],
+        "y": []
+    },
+    "generated_on": "03/11/2021_00:10:22",
+    "map_name": "grpc_test",
+    "map_type": 0,
+    "mission_duration_min": 10,
+    "wind": {
+        "dir_deg": 0,
+        "spd_kts": 0
+    }
+}
