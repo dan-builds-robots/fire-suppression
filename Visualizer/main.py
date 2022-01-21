@@ -138,7 +138,10 @@ class Visualizer(VisualizationSharedDataStore):
         Also sets up the callback to update data that depend on the grpc connection.
         """
         
-        if self.Viz.mode == Mode.MAP_MAKER:
+        if self.Viz.mode == Mode.MAP_MAKER and self.Viz.data.disable_save:
+            log.info("****  Can't load the " + self.Viz.map_name + " map in edit mode - no cheating ;)  ****")
+            exit()
+        elif self.Viz.mode == Mode.MAP_MAKER and not self.Viz.data.disable_save:
             curdoc().add_root(Row(self.Viz.plot.figure, Column(self.Viz.button.radio_button_description,
                                                                self.Viz.button.radio_button_group,
                                                                self.Viz.data_table.survivors_table_description,
@@ -195,6 +198,11 @@ class Visualizer(VisualizationSharedDataStore):
                                                                self.Viz.button.save_as_button,
                                                                self.Viz.button.cheat_button,
                                                                width_policy="min", min_width=500), width_policy="max", width=2048))
+        
+        else:
+            log.error("!!!   Unknown mode - send LM staff the exact command you used to get this message   !!!")
+            exit()
+            
 
         if self.Viz.mode == Mode.VISUALIZATION:
             # Start the grpc server (internally operates in another process)
@@ -205,8 +213,8 @@ class Visualizer(VisualizationSharedDataStore):
             
             # Check in on grpc data every 10 ms
             curdoc().add_periodic_callback(self.update, 10)  # period in ms            
-            # Check in on grpc data every 100 ms
-            curdoc().add_periodic_callback(self.file_io_update, 100)  # period in ms       
+            # Check in on grpc data every 500 ms - rarer to make sure that we don't make everything sluggish for this
+            curdoc().add_periodic_callback(self.file_io_update, 500)  # period in ms       
 
 # Create the visualizer
 visualizer = Visualizer()
